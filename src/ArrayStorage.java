@@ -24,7 +24,6 @@ public class ArrayStorage {
 
   Resume get(String uuid) {
     int indexUuid = getIndexUuid(uuid);
-
     if (indexUuid < 0) {
       return null;
     }
@@ -33,18 +32,14 @@ public class ArrayStorage {
 
   void delete(String uuid) {
     int indexUuid = getIndexUuid(uuid);
-
-    if (indexUuid < 0) {
-      return;
+    if (indexUuid >= 0) {
+      int lastIndex = size - 1;
+      if (indexUuid != lastIndex) {
+        storage[indexUuid] = storage[lastIndex];
+      }
+      storage[lastIndex] = null;
+      size = size - 1;
     }
-
-    int lastIndex = size - 1;
-    if (indexUuid != lastIndex) {
-      int lengthDest = lastIndex - indexUuid;
-      System.arraycopy(storage, indexUuid + 1, storage, indexUuid, lengthDest);
-    }
-    storage[lastIndex] = null;
-    size = size - 1;
   }
 
   /**
@@ -64,7 +59,6 @@ public class ArrayStorage {
         return i;
       }
     }
-
     return -1;
   }
 }
