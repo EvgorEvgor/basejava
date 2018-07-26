@@ -18,7 +18,7 @@ public class ArrayStorage {
 
     if (indexUuid < 0) {
       storage[size] = r;
-      size = size + 1;
+      size++;
     }
   }
 
@@ -38,7 +38,7 @@ public class ArrayStorage {
         storage[indexUuid] = storage[lastIndex];
       }
       storage[lastIndex] = null;
-      size = size - 1;
+      size--;
     }
   }
 
@@ -50,7 +50,7 @@ public class ArrayStorage {
   }
 
   int size() {
-    return this.size;
+    return size;
   }
 
   private int getIndexUuid(String uuid) {
