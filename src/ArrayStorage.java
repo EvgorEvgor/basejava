@@ -5,19 +5,36 @@ import java.util.Arrays;
  */
 
 public class ArrayStorage {
-  private Resume[] storage = new Resume[10000];
+  private final int STORAGE_SIZE = 10000;
+  private Resume[] storage = new Resume[STORAGE_SIZE];
   private int size = 0;
+
+  int getStorageSize() {
+    return STORAGE_SIZE;
+  }
 
   void clear() {
     Arrays.fill(storage, 0, size, null);
     size = 0;
   }
 
-  void save(Resume r) {
-    int indexUuid = getIndexUuid(r.uuid);
-
+  void update(Resume resume) {
+    int indexUuid = getIndexUuid(resume.uuid);
     if (indexUuid < 0) {
-      storage[size] = r;
+      System.out.println("ERROR Illegal argument");
+      return;
+    }
+    storage[indexUuid] = resume;
+  }
+
+  void save(Resume resume) {
+    int indexUuid = getIndexUuid(resume.uuid);
+    if (indexUuid < 0) {
+      if (size >= STORAGE_SIZE) {
+        System.out.println("ERROR Storage size was exceeded.");
+        return;
+      }
+      storage[size] = resume;
       size++;
     }
   }
@@ -39,6 +56,8 @@ public class ArrayStorage {
       }
       storage[lastIndex] = null;
       size--;
+    } else {
+      System.out.println("ERROR Illegal argument");
     }
   }
 
@@ -55,7 +74,7 @@ public class ArrayStorage {
 
   private int getIndexUuid(String uuid) {
     for (int i = 0; i < size; i++) {
-      if (storage[i].uuid == uuid) {
+      if (uuid == storage[i].uuid) {
         return i;
       }
     }

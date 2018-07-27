@@ -24,10 +24,20 @@ public class MainTestArrayStorage {
         printAll();
         ARRAY_STORAGE.delete(r1.uuid);
         printAll();
+
+        ARRAY_STORAGE.update(r1);
+        printAll();
+
         ARRAY_STORAGE.clear();
         printAll();
 
         System.out.println("Size: " + ARRAY_STORAGE.size());
+
+        for(int i = 0; i <= ARRAY_STORAGE.getStorageSize(); i++) {
+            Resume resume = new Resume();
+            resume.uuid = "uuid" + i;
+            ARRAY_STORAGE.save(resume);
+        }
     }
 
     static void printAll() {
