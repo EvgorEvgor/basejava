@@ -9,27 +9,27 @@ public class ArrayStorage {
   private Resume[] storage = new Resume[STORAGE_SIZE];
   private int size = 0;
 
-  int getStorageSize() {
+  public int getStorageSize() {
     return STORAGE_SIZE;
   }
 
-  void clear() {
+  public void clear() {
     Arrays.fill(storage, 0, size, null);
     size = 0;
   }
 
-  void update(Resume resume) {
-    int indexUuid = getIndexUuid(resume.uuid);
-    if (indexUuid < 0) {
+  public void update(Resume resume) {
+    int index = getIndex(resume.uuid);
+    if (index < 0) {
       System.out.println("ERROR Illegal argument");
       return;
     }
-    storage[indexUuid] = resume;
+    storage[index] = resume;
   }
 
-  void save(Resume resume) {
-    int indexUuid = getIndexUuid(resume.uuid);
-    if (indexUuid < 0) {
+  public void save(Resume resume) {
+    int index = getIndex(resume.uuid);
+    if (index < 0) {
       if (size >= STORAGE_SIZE) {
         System.out.println("ERROR Storage size was exceeded.");
         return;
@@ -39,22 +39,19 @@ public class ArrayStorage {
     }
   }
 
-  Resume get(String uuid) {
-    int indexUuid = getIndexUuid(uuid);
-    if (indexUuid < 0) {
+  public Resume get(String uuid) {
+    int index = getIndex(uuid);
+    if (index < 0) {
       return null;
     }
-    return storage[indexUuid];
+    return storage[index];
   }
 
-  void delete(String uuid) {
-    int indexUuid = getIndexUuid(uuid);
-    if (indexUuid >= 0) {
-      int lastIndex = size - 1;
-      if (indexUuid != lastIndex) {
-        storage[indexUuid] = storage[lastIndex];
-      }
-      storage[lastIndex] = null;
+  public void delete(String uuid) {
+    int index = getIndex(uuid);
+    if (index >= 0) {
+      storage[index] = storage[size - 1];
+      storage[size - 1] = null;
       size--;
     } else {
       System.out.println("ERROR Illegal argument");
@@ -64,15 +61,15 @@ public class ArrayStorage {
   /**
    * @return array, contains only Resumes in storage (without null)
    */
-  Resume[] getAll() {
+  public Resume[] getAll() {
     return Arrays.copyOf(storage, size);
   }
 
-  int size() {
+  public int size() {
     return size;
   }
 
-  private int getIndexUuid(String uuid) {
+  private int getIndex(String uuid) {
     for (int i = 0; i < size; i++) {
       if (uuid == storage[i].uuid) {
         return i;

@@ -3,11 +3,11 @@
  */
 public class Resume {
 
-    // Unique identifier
-    String uuid;
+  // Unique identifier
+  public String uuid;
 
-    @Override
-    public String toString() {
-        return uuid;
-    }
+  @Override
+  public String toString() {
+    return uuid;
+  }
 }
