@@ -31,12 +31,14 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "update":
-                    r = new Resume(uuid);
+                    r = new Resume();
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.update(r);
                     printAll();
                     break;
                 case "save":
-                    r = new Resume(uuid);
+                    r = new Resume();
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;

@@ -6,12 +6,14 @@ public class Resume {
     // Unique identifier
     private String uuid;
 
-    Resume(String uuid) {
-        this.uuid = uuid;
-    }
+    Resume() {}
 
     public String getUuid(){
         return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Override
