@@ -1,3 +1,7 @@
+package ru.javawebinar.basejava.storage.ArrayStorage;
+
+import ru.javawebinar.basejava.model.Resume;
+
 import java.util.Arrays;
 
 /**
