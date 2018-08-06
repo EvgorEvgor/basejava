@@ -8,12 +8,24 @@ public class Resume {
     // Unique identifier
     private String uuid;
 
-    public String getUuid(){
+    public String getUuid() {
         return uuid;
     }
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (null == o || getClass() != o.getClass()) return false;
+        return uuid.equals(((Resume) o).uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return uuid.hashCode();
     }
 
     @Override
