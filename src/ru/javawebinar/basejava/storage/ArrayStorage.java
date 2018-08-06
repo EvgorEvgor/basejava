@@ -2,21 +2,14 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
-
 /**
  * Array based storage for Resumes
  */
 
 public class ArrayStorage extends AbstractArrayStorage {
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (NOT_EXIST_INDEX == index) {
+        if (index < 0) {
             System.out.println("ERROR Resume " + uuid + " not exist");
         } else {
             storage[index] = storage[size - 1];
@@ -25,31 +18,14 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
-    }
-
-    public void save(Resume resume) {
-        if (NOT_EXIST_INDEX == getIndex(resume.getUuid())) {
-            if (STORAGE_LIMIT <= size) {
-                System.out.println("ERROR Storage overflow");
-                return;
-            }
-            storage[size] = resume;
-            size++;
-        }
-    }
-
-
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (NOT_EXIST_INDEX == index) {
-            System.out.println("ERROR Resume " + resume.getUuid() + " not exist");
+    public void save(Resume r) {
+        if (getIndex(r.getUuid()) >= 0) {
+            System.out.println("ERROR Resume " + r.getUuid() + " already exist");
+        } else if (STORAGE_LIMIT <= size) {
+            System.out.println("ERROR Storage overflow");
         } else {
-            storage[index] = resume;
+            storage[size] = r;
+            size++;
         }
     }
 
@@ -59,6 +35,6 @@ public class ArrayStorage extends AbstractArrayStorage {
                 return i;
             }
         }
-        return NOT_EXIST_INDEX;
+        return -1;
     }
 }
