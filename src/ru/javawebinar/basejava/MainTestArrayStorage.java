@@ -38,7 +38,7 @@ public class MainTestArrayStorage {
 
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
-        for (int i = 0; i <= ARRAY_STORAGE.getStorageSize(); i++) {
+        for (int i = 0; i <= ARRAY_STORAGE.getLimit(); i++) {
             Resume resume = new Resume();
             resume.setUuid("uuid" + i);
             ARRAY_STORAGE.save(resume);

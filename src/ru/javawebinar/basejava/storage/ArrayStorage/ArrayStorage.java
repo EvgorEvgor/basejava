@@ -9,57 +9,34 @@ import java.util.Arrays;
  */
 
 public class ArrayStorage {
-    private final int STORAGE_SIZE = 10000;
-    private Resume[] storage = new Resume[STORAGE_SIZE];
+    private final int STORAGE_LIMIT = 10000;
+    private final int NOT_EXIST_INDEX = -1;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
-
-    public int getStorageSize() {
-        return STORAGE_SIZE;
-    }
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            System.out.println("ERROR Illegal argument");
-            return;
-        }
-        storage[index] = resume;
-    }
-
-    public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            if (size >= STORAGE_SIZE) {
-                System.out.println("ERROR Storage size was exceeded.");
-                return;
-            }
-            storage[size] = resume;
-            size++;
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (NOT_EXIST_INDEX == index) {
+            System.out.println("ERROR Resume " + uuid + " not exist");
+        } else {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index < 0) {
+        if (NOT_EXIST_INDEX == index) {
+            System.out.println("ERROR Resume " + uuid + " not exist");
             return null;
         }
         return storage[index];
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
-            size--;
-        } else {
-            System.out.println("ERROR Illegal argument");
-        }
     }
 
     /**
@@ -69,8 +46,33 @@ public class ArrayStorage {
         return Arrays.copyOf(storage, size);
     }
 
+
+    public int getLimit() {
+        return STORAGE_LIMIT;
+    }
+
+    public void save(Resume resume) {
+        if (NOT_EXIST_INDEX == getIndex(resume.getUuid())) {
+            if (STORAGE_LIMIT <= size) {
+                System.out.println("ERROR Storage overflow");
+                return;
+            }
+            storage[size] = resume;
+            size++;
+        }
+    }
+
     public int size() {
         return size;
+    }
+
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (NOT_EXIST_INDEX == index) {
+            System.out.println("ERROR Resume " + resume.getUuid() + " not exist");
+        } else {
+            storage[index] = resume;
+        }
     }
 
     private int getIndex(String uuid) {
@@ -79,6 +81,6 @@ public class ArrayStorage {
                 return i;
             }
         }
-        return -1;
+        return NOT_EXIST_INDEX;
     }
 }
