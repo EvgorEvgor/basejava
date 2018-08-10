@@ -13,7 +13,7 @@ public class MainTestArrayStorage {
     private static final SortedArrayStorage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-//        doTest(ARRAY_STORAGE);
+        doTest(ARRAY_STORAGE);
         doTest(SORTED_ARRAY_STORAGE);
     }
 
