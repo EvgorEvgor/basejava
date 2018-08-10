@@ -6,40 +6,19 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends ArrayStorage {
     @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("ERROR Resume " + uuid + " not exist");
-        } else {
-            int lastIndex = size - 1;
-            if (index != lastIndex)
-                System.arraycopy(storage, index + 1, storage, index, lastIndex - index);
-            storage[lastIndex] = null;
-            size--;
+    protected void deleteElement(int index) {
+        int countShifted = size - index - 1;
+        if (countShifted > 0) {
+            System.arraycopy(storage, index + 1, storage, index, countShifted);
         }
     }
 
     @Override
-    public void save(Resume r) {
-        if (getIndex(r.getUuid()) >= 0) {
-            System.out.println("ERROR Resume " + r.getUuid() + " already exist");
-        } else if (STORAGE_LIMIT <= size) {
-            System.out.println("ERROR Storage overflow");
-        } else {
-            int index = -1;
-            for (int i = 0; i < size; i++) {
-                if (r.compareTo(storage[i]) < 0) {
-                    index = i;
-                }
-            }
-            if (index < 0) {
-                storage[size] = r;
-            } else {
-                System.arraycopy(storage, index, storage, index + 1, size - index);
-                storage[index] = r;
-            }
-            size++;
-        }
+    protected void insertElement(Resume r, int index) {
+        int realIndex = - index -1;
+        System.out.println(realIndex);
+        System.arraycopy(storage, realIndex, storage, realIndex + 1, size - realIndex);
+        storage[realIndex] = r;
     }
 
     @Override
