@@ -4,7 +4,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public class SortedArrayStorage extends ArrayStorage {
+public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected void deleteElement(int index) {
         int countShifted = size - index - 1;
