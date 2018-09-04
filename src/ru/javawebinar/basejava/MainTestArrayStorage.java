@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava;
 
+import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.AbstractArrayStorage;
 import ru.javawebinar.basejava.storage.ArrayStorage;
@@ -35,13 +37,19 @@ public class MainTestArrayStorage {
         System.out.println("Get r1: " + arrayStorage.get(r1.getUuid()));
         System.out.println("Size: " + arrayStorage.size());
 
-        System.out.println("Get dummy: " + arrayStorage.get("dummy"));
+        try {
+            System.out.println("Get dummy: " + arrayStorage.get("dummy"));
+        } catch (NotExistStorageException e) {
+        }
 
         printAll(arrayStorage);
         arrayStorage.delete(r1.getUuid());
         printAll(arrayStorage);
 
-        arrayStorage.update(r1);
+        try {
+            arrayStorage.update(r1);
+        } catch (NotExistStorageException e) {
+        }
         printAll(arrayStorage);
 
         arrayStorage.clear();
@@ -49,10 +57,14 @@ public class MainTestArrayStorage {
 
         System.out.println("Size: " + arrayStorage.size());
 
-        for (int i = 0; i <= arrayStorage.getLimit(); i++) {
+        for (int i = 0; i < arrayStorage.getLimit(); i++) {
             Resume resume = new Resume();
             resume.setUuid("uuid" + i);
             arrayStorage.save(resume);
+        }
+        try {
+            arrayStorage.save(new Resume("overflowUuid"));
+        } catch (StorageException e) {
         }
     }
 
