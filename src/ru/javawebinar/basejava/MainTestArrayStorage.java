@@ -1,11 +1,11 @@
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.AbstractArrayStorage;
 import ru.javawebinar.basejava.storage.ArrayStorage;
+import ru.javawebinar.basejava.storage.ListStorage;
 import ru.javawebinar.basejava.storage.SortedArrayStorage;
+import ru.javawebinar.basejava.storage.Storage;
 
 /**
  * Test for your ArrayStorage implementation
@@ -13,13 +13,15 @@ import ru.javawebinar.basejava.storage.SortedArrayStorage;
 public class MainTestArrayStorage {
     private static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
     private static final SortedArrayStorage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
+    private static final ListStorage LIST_STORAGE = new ListStorage();
 
     public static void main(String[] args) {
-        doTest(ARRAY_STORAGE);
-        doTest(SORTED_ARRAY_STORAGE);
+//        doTest(ARRAY_STORAGE);
+//        doTest(SORTED_ARRAY_STORAGE);
+        doTest(LIST_STORAGE);
     }
 
-    private static void doTest(AbstractArrayStorage arrayStorage) {
+    private static void doTest(Storage storage) {
         Resume r1 = new Resume();
         r1.setUuid("uuid1");
         Resume r2 = new Resume();
@@ -29,48 +31,48 @@ public class MainTestArrayStorage {
         Resume r4 = new Resume();
         r4.setUuid("uuid4");
 
-        arrayStorage.save(r1);
-        arrayStorage.save(r4);
-        arrayStorage.save(r2);
-        arrayStorage.save(r3);
+        storage.save(r1);
+        storage.save(r4);
+        storage.save(r2);
+        storage.save(r3);
 
-        System.out.println("Get r1: " + arrayStorage.get(r1.getUuid()));
-        System.out.println("Size: " + arrayStorage.size());
+        System.out.println("Get r1: " + storage.get(r1.getUuid()));
+        System.out.println("Size: " + storage.size());
 
         try {
-            System.out.println("Get dummy: " + arrayStorage.get("dummy"));
+            System.out.println("Get dummy: " + storage.get("dummy"));
         } catch (NotExistStorageException e) {
         }
 
-        printAll(arrayStorage);
-        arrayStorage.delete(r1.getUuid());
-        printAll(arrayStorage);
+        printAll(storage);
+        storage.delete(r1.getUuid());
+        printAll(storage);
 
         try {
-            arrayStorage.update(r1);
+            storage.update(r1);
         } catch (NotExistStorageException e) {
         }
-        printAll(arrayStorage);
+        printAll(storage);
 
-        arrayStorage.clear();
-        printAll(arrayStorage);
+        storage.clear();
+        printAll(storage);
 
-        System.out.println("Size: " + arrayStorage.size());
+        System.out.println("Size: " + storage.size());
 
-        for (int i = 0; i < arrayStorage.getLimit(); i++) {
-            Resume resume = new Resume();
-            resume.setUuid("uuid" + i);
-            arrayStorage.save(resume);
-        }
-        try {
-            arrayStorage.save(new Resume("overflowUuid"));
-        } catch (StorageException e) {
-        }
+//        for (int i = 0; i < storage.getLimit(); i++) {
+//            Resume resume = new Resume();
+//            resume.setUuid("uuid" + i);
+//            storage.save(resume);
+//        }
+//        try {
+//            storage.save(new Resume("overflowUuid"));
+//        } catch (StorageException e) {
+//        }
     }
 
-    private static void printAll(AbstractArrayStorage arrayStorage) {
+    private static void printAll(Storage storage) {
         System.out.println("\nGet All");
-        for (Resume r : arrayStorage.getAll()) {
+        for (Resume r : storage.getAll()) {
             System.out.println(r);
         }
     }

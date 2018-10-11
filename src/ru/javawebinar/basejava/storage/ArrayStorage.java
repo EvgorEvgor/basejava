@@ -2,6 +2,8 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.Objects;
+
 /**
  * Array based storage for Resumes
  */
@@ -18,9 +20,9 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected int getIndex(String uuid) {
+    protected Object getFindedKey(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
+            if (Objects.equals(storage[i].getUuid(), uuid)) {
                 return i;
             }
         }

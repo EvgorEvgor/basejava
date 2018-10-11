@@ -15,13 +15,13 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void insertElement(Resume r, int index) {
-        int realIndex = - index -1;
+        int realIndex = -index - 1;
         System.arraycopy(storage, realIndex, storage, realIndex + 1, size - realIndex);
         storage[realIndex] = r;
     }
 
     @Override
-    protected int getIndex(String uuid) {
+    protected Object getFindedKey(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
