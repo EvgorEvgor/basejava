@@ -20,38 +20,40 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        Object key = getKey(uuid, true);
+        Object key = getExistedKey(uuid);
         doDelete(key);
     }
 
     @Override
     public Resume get(String uuid) {
-        Object key = getKey(uuid, true);
+        Object key = getExistedKey(uuid);
         return doGet(key);
     }
 
     @Override
     public void save(Resume r) {
-        Object key = getKey(r.getUuid(), false);
+        Object key = getNotExistedKey(r.getUuid());
         doSave(r, key);
     }
 
     @Override
     public void update(Resume r) {
-        Object key = getKey(r.getUuid(), true);
+        Object key = getExistedKey(r.getUuid());
         doUpdate(r, key);
     }
 
-    private Object getKey(String uuid, boolean existed) {
+    private Object getExistedKey(String uuid) {
         Object findedKey = getFindedKey(uuid);
-        if (existed) {
-            if (!isExist(findedKey)) {
-                throw new NotExistStorageException(uuid);
-            }
-        } else {
-            if (isExist(findedKey)) {
-                throw new ExistStorageException(uuid);
-            }
+        if (!isExist(findedKey)) {
+            throw new NotExistStorageException(uuid);
+        }
+        return findedKey;
+    }
+
+    private Object getNotExistedKey(String uuid) {
+        Object findedKey = getFindedKey(uuid);
+        if (isExist(findedKey)) {
+            throw new ExistStorageException(uuid);
         }
         return findedKey;
     }
