@@ -7,9 +7,9 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected void deleteElement(int index) {
-        int countShifted = size - index - 1;
-        if (countShifted > 0) {
-            System.arraycopy(storage, index + 1, storage, index, countShifted);
+        int shiftCount = size - index - 1;
+        if (shiftCount > 0) {
+            System.arraycopy(storage, index + 1, storage, index, shiftCount);
         }
     }
 
