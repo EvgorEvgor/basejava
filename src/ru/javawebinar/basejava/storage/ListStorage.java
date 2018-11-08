@@ -26,26 +26,23 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    void doDelete(Object key) {
-        int index = (Integer) key;
-        storage.remove(index);
+    void doDelete(Object index) {
+        storage.remove((int) index);
     }
 
     @Override
-    Resume doGet(Object key) {
-        int index = (Integer) key;
-        return storage.get(index);
+    Resume doGet(Object index) {
+        return storage.get((int) index);
     }
 
     @Override
-    void doSave(Resume resume, Object key) {
+    void doSave(Resume resume, Object index) {
         storage.add(resume);
     }
 
     @Override
-    public void doUpdate(Resume resume, Object key) {
-        int index = (Integer) key;
-        storage.set(index, resume);
+    public void doUpdate(Resume resume, Object index) {
+        storage.set((int) index, resume);
     }
 
     @Override
