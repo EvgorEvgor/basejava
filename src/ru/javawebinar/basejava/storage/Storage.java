@@ -11,9 +11,9 @@ public interface Storage {
 
     Resume[] getAll();
 
-    void save(Resume r);
+    void save(Resume resume);
 
     int size();
 
-    void update(Resume r);
+    void update(Resume resume);
 }

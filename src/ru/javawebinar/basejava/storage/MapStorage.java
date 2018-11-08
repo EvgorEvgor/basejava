@@ -34,13 +34,13 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    void doSave(Resume r, Object key) {
-        storage.put(r.getUuid(), r);
+    void doSave(Resume resume, Object key) {
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
-    void doUpdate(Resume r, Object key) {
-        storage.replace((String) key, r);
+    void doUpdate(Resume resume, Object key) {
+        storage.replace((String) key, resume);
     }
 
     protected Object getFindedKey(String uuid) {

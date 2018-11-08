@@ -10,9 +10,9 @@ public abstract class AbstractStorage implements Storage {
 
     abstract Resume doGet(Object key);
 
-    abstract void doSave(Resume r, Object key);
+    abstract void doSave(Resume resume, Object key);
 
-    abstract void doUpdate(Resume r, Object key);
+    abstract void doUpdate(Resume resume, Object key);
 
     protected abstract Object getFindedKey(String uuid);
 
@@ -31,15 +31,15 @@ public abstract class AbstractStorage implements Storage {
     }
 
     @Override
-    public void save(Resume r) {
-        Object key = getNotExistedKey(r.getUuid());
-        doSave(r, key);
+    public void save(Resume resume) {
+        Object key = getNotExistedKey(resume.getUuid());
+        doSave(resume, key);
     }
 
     @Override
-    public void update(Resume r) {
-        Object key = getExistedKey(r.getUuid());
-        doUpdate(r, key);
+    public void update(Resume resume) {
+        Object key = getExistedKey(resume.getUuid());
+        doUpdate(resume, key);
     }
 
     private Object getExistedKey(String uuid) {

@@ -38,14 +38,14 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    void doSave(Resume r, Object key) {
-        storage.add(r);
+    void doSave(Resume resume, Object key) {
+        storage.add(resume);
     }
 
     @Override
-    public void doUpdate(Resume r, Object key) {
+    public void doUpdate(Resume resume, Object key) {
         int index = (Integer) key;
-        storage.set(index, r);
+        storage.set(index, resume);
     }
 
     @Override
