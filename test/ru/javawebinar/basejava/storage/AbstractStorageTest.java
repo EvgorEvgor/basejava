@@ -7,20 +7,26 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import java.util.Arrays;
+
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.junit.Assert.*;
 
 abstract class AbstractStorageTest {
-    static final String DUMMY = "dummy";
+    Storage storage;
 
-    static final String UUID1 = "uuid1";
-    static final String UUID2 = "uuid2";
+    private static final String DUMMY = "dummy";
+
+    private static final String UUID1 = "uuid1";
+    private static final String UUID2 = "uuid2";
+    private static final String UUID3 = "uuid3";
+    private static final String UUID4 = "uuid4";
+
     static final Resume RESUME1;
     static final Resume RESUME2;
     static final Resume RESUME3;
     static final Resume RESUME4;
-    private static final String UUID3 = "uuid3";
-    private static final String UUID4 = "uuid4";
+
 
     static {
         RESUME1 = new Resume(UUID1);
@@ -29,7 +35,7 @@ abstract class AbstractStorageTest {
         RESUME4 = new Resume(UUID4);
     }
 
-    Storage storage;
+
 
     AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -39,8 +45,8 @@ abstract class AbstractStorageTest {
     public void init() {
         storage.clear();
         storage.save(RESUME1);
-        storage.save(RESUME2);
         storage.save(RESUME3);
+        storage.save(RESUME2);
     }
 
     @After
@@ -48,6 +54,11 @@ abstract class AbstractStorageTest {
         storage.clear();
     }
 
+    @Test
+    public void clear() {
+        storage.clear();
+        assertSize(0);
+    }
 
     @Test(expected = NotExistStorageException.class)
     public void delete() {
@@ -74,6 +85,14 @@ abstract class AbstractStorageTest {
     }
 
     @Test
+    public void getAll() {
+        Resume[] resumes = storage.getAll();
+        assertThat(Arrays.asList(resumes), hasItem(RESUME1));
+        assertThat(Arrays.asList(resumes), hasItem(RESUME2));
+        assertThat(Arrays.asList(resumes), hasItem(RESUME3));
+    }
+
+    @Test
     public void save() {
         storage.save(RESUME4);
         assertSize(4);
@@ -83,6 +102,11 @@ abstract class AbstractStorageTest {
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
         storage.save(RESUME3);
+    }
+
+    @Test
+    public void size() {
+        assertSize(3);
     }
 
     @Test
@@ -97,9 +121,11 @@ abstract class AbstractStorageTest {
         storage.get(DUMMY);
     }
 
-    protected abstract void assertSize(int size);
-
     private void assertGet(Resume resume) {
         assertEquals(resume, storage.get(resume.getUuid()));
+    }
+
+    private void assertSize(int size) {
+        assertEquals(size, storage.size());
     }
 }

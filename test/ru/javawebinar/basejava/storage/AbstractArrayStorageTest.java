@@ -5,26 +5,10 @@ import org.junit.Test;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import static org.junit.Assert.assertEquals;
-
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
     AbstractArrayStorageTest(Storage storage) {
         super(storage);
-    }
-
-    @Test
-    public void clear() {
-        storage.clear();
-        assertSize(0);
-    }
-
-    @Test
-    public void getAll() {
-        Resume[] resumes = storage.getAll();
-        assertEquals(RESUME1, resumes[0]);
-        assertEquals(RESUME2, resumes[1]);
-        assertEquals(RESUME3, resumes[2]);
     }
 
     @Test(expected = StorageException.class)
@@ -35,18 +19,9 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
                 storage.save(new Resume());
             }
         } catch (Exception e) {
-            Assert.fail();
+            String msg = "Storage Overflow Error.";
+            Assert.fail(msg);
         }
         storage.save(RESUME4);
     }
-
-    @Test
-    public void size() {
-        assertSize(3);
-    }
-
-    protected void assertSize(int size) {
-        assertEquals(size, storage.size());
-    }
-
 }
