@@ -43,7 +43,7 @@ public class MapStorage extends AbstractStorage {
         storage.replace((String) key, resume);
     }
 
-    protected Object getFindedKey(String uuid) {
+    protected Object getSearchKey(String uuid) {
         return uuid;
     }
 
