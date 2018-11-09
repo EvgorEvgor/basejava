@@ -19,7 +19,7 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
                 storage.save(new Resume());
             }
         } catch (Exception e) {
-            String msg = "Storage Overflow Error.";
+            String msg = "Exceeded STORAGE_LIMIT without exception.";
             Assert.fail(msg);
         }
         storage.save(RESUME4);
