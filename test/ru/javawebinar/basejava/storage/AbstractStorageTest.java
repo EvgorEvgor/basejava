@@ -13,7 +13,10 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.*;
 
 abstract class AbstractStorageTest {
-    Storage storage;
+    static final Resume RESUME1;
+    static final Resume RESUME2;
+    static final Resume RESUME3;
+    static final Resume RESUME4;
 
     private static final String DUMMY = "dummy";
 
@@ -22,20 +25,19 @@ abstract class AbstractStorageTest {
     private static final String UUID3 = "uuid3";
     private static final String UUID4 = "uuid4";
 
-    static final Resume RESUME1;
-    static final Resume RESUME2;
-    static final Resume RESUME3;
-    static final Resume RESUME4;
-
+    private static final String FULLNAME1 = "Name1";
+    private static final String FULLNAME2 = "Name2";
+    private static final String FULLNAME3 = "Name3";
+    private static final String FULLNAME4 = "Name4";
 
     static {
-        RESUME1 = new Resume(UUID1);
-        RESUME2 = new Resume(UUID2);
-        RESUME3 = new Resume(UUID3);
-        RESUME4 = new Resume(UUID4);
+        RESUME1 = new Resume(UUID1, FULLNAME1);
+        RESUME2 = new Resume(UUID2, FULLNAME2);
+        RESUME3 = new Resume(UUID3, FULLNAME3);
+        RESUME4 = new Resume(UUID4, FULLNAME4);
     }
 
-
+    Storage storage;
 
     AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -111,7 +113,7 @@ abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID1);
+        Resume newResume = new Resume(UUID1, FULLNAME1);
         storage.update(newResume);
         assertSame(newResume, storage.get(UUID1));
     }

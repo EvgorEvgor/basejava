@@ -22,14 +22,10 @@ public class MainTestArrayStorage {
     }
 
     private static void doTest(Storage storage) {
-        Resume r1 = new Resume();
-        r1.setUuid("uuid1");
-        Resume r2 = new Resume();
-        r2.setUuid("uuid2");
-        Resume r3 = new Resume();
-        r3.setUuid("uuid3");
-        Resume r4 = new Resume();
-        r4.setUuid("uuid4");
+        Resume r1 = new Resume("uuid1","Name1");
+        Resume r2 = new Resume("uuid2","Name2");
+        Resume r3 = new Resume("uuid3","Name3");
+        Resume r4 = new Resume("uuid4","Name4");
 
         storage.save(r1);
         storage.save(r4);
@@ -42,6 +38,7 @@ public class MainTestArrayStorage {
         try {
             System.out.println("Get dummy: " + storage.get("dummy"));
         } catch (NotExistStorageException e) {
+            e.printStackTrace();
         }
 
         printAll(storage);
@@ -51,6 +48,7 @@ public class MainTestArrayStorage {
         try {
             storage.update(r1);
         } catch (NotExistStorageException e) {
+            e.printStackTrace();
         }
         printAll(storage);
 
