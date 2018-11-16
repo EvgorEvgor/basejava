@@ -6,13 +6,13 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    abstract void doDelete(Object key);
+    protected abstract void doDelete(Object key);
 
-    abstract Resume doGet(Object key);
+    protected abstract Resume doGet(Object key);
 
-    abstract void doSave(Resume resume, Object key);
+    protected abstract void doSave(Resume resume, Object key);
 
-    abstract void doUpdate(Resume resume, Object key);
+    protected abstract void doUpdate(Resume resume, Object key);
 
     protected abstract Object getSearchKey(String uuid);
 
