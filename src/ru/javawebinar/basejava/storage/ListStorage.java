@@ -15,28 +15,27 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
-    }
-
-
-    @Override
     public int size() {
         return storage.size();
     }
 
     @Override
-    void doDelete(Object index) {
+    protected void doDelete(Object index) {
         storage.remove((int) index);
     }
 
     @Override
-    Resume doGet(Object index) {
+    protected Resume doGet(Object index) {
         return storage.get((int) index);
     }
 
     @Override
-    void doSave(Resume resume, Object index) {
+    protected List<Resume> doGetAll() {
+        return new LinkedList<>(storage);
+    }
+
+    @Override
+    protected void doSave(Resume resume, Object index) {
         storage.add(resume);
     }
 

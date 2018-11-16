@@ -3,6 +3,8 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
@@ -14,32 +16,32 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[0]);
-    }
-
-    @Override
     public int size() {
         return storage.size();
     }
 
     @Override
-    void doDelete(Object key) {
+    protected void doDelete(Object key) {
         storage.remove(key);
     }
 
     @Override
-    Resume doGet(Object key) {
+    protected Resume doGet(Object key) {
         return storage.get(key);
     }
 
     @Override
-    void doSave(Resume resume, Object key) {
+    protected List<Resume> doGetAll() {
+        return new LinkedList<>(storage.values());
+    }
+
+    @Override
+    protected void doSave(Resume resume, Object key) {
         storage.put(resume.getUuid(), resume);
     }
 
     @Override
-    void doUpdate(Resume resume, Object key) {
+    protected void doUpdate(Resume resume, Object key) {
         storage.replace((String) key, resume);
     }
 

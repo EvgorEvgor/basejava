@@ -8,16 +8,13 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 abstract class AbstractStorageTest {
-    static final Resume RESUME1;
-    static final Resume RESUME2;
-    static final Resume RESUME3;
-    static final Resume RESUME4;
-
     private static final String DUMMY = "dummy";
 
     private static final String UUID1 = "uuid1";
@@ -29,6 +26,11 @@ abstract class AbstractStorageTest {
     private static final String FULLNAME2 = "Name2";
     private static final String FULLNAME3 = "Name3";
     private static final String FULLNAME4 = "Name4";
+
+    private static final Resume RESUME1;
+    private static final Resume RESUME2;
+    private static final Resume RESUME3;
+    static final Resume RESUME4;
 
     static {
         RESUME1 = new Resume(UUID1, FULLNAME1);
@@ -87,11 +89,11 @@ abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
-        Resume[] resumes = storage.getAll();
-        assertThat(Arrays.asList(resumes), hasItem(RESUME1));
-        assertThat(Arrays.asList(resumes), hasItem(RESUME2));
-        assertThat(Arrays.asList(resumes), hasItem(RESUME3));
+    public void getAllSorted() {
+        List<Resume> sortedResumes = Arrays.asList(RESUME1, RESUME2, RESUME3);
+        List<Resume> list = storage.getAllSorted();
+        Collections.sort(sortedResumes);
+        assertEquals(sortedResumes, list);
     }
 
     @Test
