@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
     private Map<String, Resume> storage = new HashMap<>();
 
     @Override
@@ -22,12 +22,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void doDelete(Object key) {
-        storage.remove(key);
+        storage.remove(((Resume) key).getUuid());
     }
 
     @Override
     protected Resume doGet(Object key) {
-        return storage.get(key);
+        return (Resume) key;
     }
 
     @Override
@@ -42,15 +42,15 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Resume resume, Object key) {
-        storage.replace((String) key, resume);
+        storage.replace(resume.getUuid(), resume);
     }
 
     protected Object getSearchKey(String uuid) {
-        return uuid;
+        return storage.get(uuid);
     }
 
     @Override
     protected boolean isExist(Object key) {
-        return storage.containsKey(key);
+        return key != null;
     }
 }

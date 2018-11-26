@@ -10,7 +10,8 @@ public class AllStorageTests {
                 ArrayStorageTest.class,
                 SortedArrayStorageTest.class,
                 ListStorageTest.class,
-                MapStorageTest.class
+                MapUuidStorageTest.class,
+                MapResumeStorageTest.class
         };
 
         for (Class testClass : storageTests) {
