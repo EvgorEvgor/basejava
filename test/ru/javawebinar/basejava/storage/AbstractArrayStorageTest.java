@@ -19,8 +19,7 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
                 storage.save(new Resume("Name " + i));
             }
         } catch (Exception e) {
-            String msg = "Exceeded STORAGE_LIMIT without exception.";
-            Assert.fail(msg);
+            Assert.fail("Exceeded STORAGE_LIMIT without exception.");
         }
         storage.save(RESUME4);
     }

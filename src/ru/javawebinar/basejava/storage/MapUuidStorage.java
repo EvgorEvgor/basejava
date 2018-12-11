@@ -22,12 +22,12 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected void doDelete(Object key) {
-        storage.remove(key);
+        storage.remove(key.toString());
     }
 
     @Override
     protected Resume doGet(Object key) {
-        return storage.get(key);
+        return storage.get(key.toString());
     }
 
     @Override
@@ -51,6 +51,6 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object key) {
-        return storage.containsKey(key);
+        return storage.containsKey(key.toString());
     }
 }
